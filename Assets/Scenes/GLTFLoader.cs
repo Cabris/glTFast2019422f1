@@ -9,20 +9,12 @@ public class GLTFLoader : MonoBehaviour
 {
     [SerializeField]
     string _url;
-
+    [SerializeField]
+    Transform _root;
     // Start is called before the first frame update
     void Start()
     {
         LoadAsync();
-        var oldSelection = Selection.objects;
-        Selection.objects = new Object[0];
-        void foo()
-        {
-            Selection.objects = oldSelection;
-            EditorApplication.delayCall -= foo;
-        }
-        EditorApplication.delayCall += foo;
-
     }
 
     private async void LoadAsync()
@@ -42,7 +34,7 @@ public class GLTFLoader : MonoBehaviour
 
         if (success)
         {
-            gltf.InstantiateMainScene(new GameObject("glTF").transform);
+            gltf.InstantiateMainScene(_root);
         }
         else
         {
